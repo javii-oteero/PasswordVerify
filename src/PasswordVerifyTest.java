@@ -3,111 +3,137 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PasswordVerifyTest {
+    private String msgCaracter = "La contrasenya ha de tenir almenys 8 caràcters\n";
+    private String msgNums = "La contrasenya ha de contenir almenys 2 números\n";
+    private String msgMayus = "La contrasenya ha de contenir almenys una lletra majúscula\n";
+    private String msgEsp = "La contrasenya ha de contenir almenys un caràcter especial";
+
     @Test
     public void testContrasenyaVacia() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify(""));
+        EsCorrecta pass = PasswordVerify.verify("");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter + msgNums + msgMayus + msgEsp, pass.getError());
     }
 
     @Test
     public void testContrasenyaCorta() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("hola"));
+        EsCorrecta pass = PasswordVerify.verify("hola");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter + msgNums + msgMayus + msgEsp, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinNumerosNiEspecialesNiMayus() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holacaracola"));
+    public void testContrasenyaSinNumerosMayusculas() {
+        EsCorrecta pass = PasswordVerify.verify("holacaracola");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgNums + msgMayus + msgEsp, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinMayusculasNiEspecialesNiLargo() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("hola12"));
+    public void testContrasenyaCortaConNumero() {
+        EsCorrecta pass = PasswordVerify.verify("hola12");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter + msgMayus + msgEsp, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinNumerosNiLargoNiEspeciales() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holA"));
+    public void testContrasenyaCortaConMayuscula() {
+        EsCorrecta pass = PasswordVerify.verify("holA");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter + msgNums + msgEsp, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinNumsNiMayusNiLargo() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("hola!"));
+    public void testContrasenyaCortaConNumeroYCaracterEspecial() {
+        EsCorrecta pass = PasswordVerify.verify("hola!");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter + msgNums + msgMayus, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSoloSinNums(){
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holaA!"));
+    public void testContrasenyaCortaConMayusculaYCaracterEspecial() {
+        EsCorrecta pass = PasswordVerify.verify("holaA!");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter + msgNums, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSoloSinMayus() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("hola12!"));
+    public void testContrasenyaCortaConNumeroYCaracterEspecialSinMayuscula() {
+        EsCorrecta pass = PasswordVerify.verify("hola12!");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter + msgMayus, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinMayusculasNiEspeciales() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("hola12A"));
+    public void testContrasenyaCortaConMayusculaYNumeroSinCaracterEspecial() {
+        EsCorrecta pass = PasswordVerify.verify("hola12A");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter + msgEsp, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinMayusNiEspecial() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holacaracola12"));
+    public void testContrasenyaLargaSinMayusculaNumeroYCaracterEspecial() {
+        EsCorrecta pass = PasswordVerify.verify("holacaracola12");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgNums + msgEsp, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinNumerosNiMayusculasNiEspeciales() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holacaracola!"));
+    public void testContrasenyaSolamenteCaracterEspecial() {
+        EsCorrecta pass = PasswordVerify.verify("holacaracola!");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgNums + msgMayus, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinNumerosNiEspeciales() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holacaracolA"));
+    public void testContrasenyaSolamenteLetraMayuscula() {
+        EsCorrecta pass = PasswordVerify.verify("holacaracolA");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgNums + msgEsp, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinCaracteresRequeridos() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("ho12A!"));
+    public void testContrasenyaLargaConMayusculaNumeroYCaracterEspecialSinLongitud() {
+        EsCorrecta pass = PasswordVerify.verify("ho12A!");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgCaracter, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinNumeros() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holacaracolaA!"));
+    public void testContrasenyaLargaConMayusculaYCaracterEspecialSinNumeros() {
+        EsCorrecta pass = PasswordVerify.verify("holacaracolaA!");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgNums, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinMayusculas() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holacaracola12!"));
+    public void testContrasenyaLargaConNumeroYCaracterEspecialSinMayuscula() {
+        EsCorrecta pass = PasswordVerify.verify("holacaracola12!");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgMayus, pass.getError());
     }
 
     @Test
-    public void testContrasenyaSinEspeciales() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertFalse(verifier.verify("holacaracola12A"));
+    public void testContrasenyaLargaConMayusculaNumeroYLongitudSinCaracterEspecial() {
+        EsCorrecta pass = PasswordVerify.verify("holacaracola12A");
+        assertFalse(pass.isCorrecta());
+        assertEquals(msgEsp, pass.getError());
     }
 
     @Test
-    public void testContrasenyaCompletaValida() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertTrue(verifier.verify("holacaracola12A!"));
+    public void testContrasenyaValidaConTodosLosRequisitos() {
+        EsCorrecta pass = PasswordVerify.verify("holacaracola12A!");
+        assertTrue(pass.isCorrecta());
+        assertEquals("", pass.getError());
     }
 
     @Test
-    public void testContrasenyaCompleja() {
-        PasswordVerify verifier = new PasswordVerify();
-        assertTrue(verifier.verify("#P4blit0cl4v0uncl4vit0#"));
+    public void testContrasenyaValidaCompleja() {
+        EsCorrecta pass = PasswordVerify.verify("#P4blit0cl4v0uncl4vit0#");
+
+        assertTrue(pass.isCorrecta());
+        assertEquals("", pass.getError());
     }
+
+
 }

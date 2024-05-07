@@ -1,6 +1,15 @@
 public class PasswordVerify {
 
-    public boolean verify(String password){
-        return false;
+    public static EsCorrecta verify(String password){
+        StringBuilder sb = new StringBuilder();
+
+            sb.append("La contrasenya ha de tenir almenys 8 caràcters\n");
+
+            sb.append("La contrasenya ha de contenir almenys 2 números\n");
+
+            sb.append("La contrasenya ha de contenir almenys una lletra majúscula\n");
+
+            sb.append("La contrasenya ha de contenir almenys un caràcter especial");
+        return new EsCorrecta(false, sb.toString());
     }
 }
