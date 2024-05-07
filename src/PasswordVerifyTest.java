@@ -75,7 +75,7 @@ class PasswordVerifyTest {
     public void testContrasenyaLargaSinMayusculaNumeroYCaracterEspecial() {
         EsCorrecta pass = PasswordVerify.verify("holacaracola12");
         assertFalse(pass.isCorrecta());
-        assertEquals(msgNums + msgEsp, pass.getError());
+        assertEquals(msgMayus + msgEsp, pass.getError());
     }
 
     @Test
