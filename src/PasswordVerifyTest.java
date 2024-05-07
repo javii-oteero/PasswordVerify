@@ -3,10 +3,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PasswordVerifyTest {
-    private String msgCaracter = "La contrasenya ha de tenir almenys 8 caràcters\n";
-    private String msgNums = "La contrasenya ha de contenir almenys 2 números\n";
-    private String msgMayus = "La contrasenya ha de contenir almenys una lletra majúscula\n";
-    private String msgEsp = "La contrasenya ha de contenir almenys un caràcter especial";
+    private final String msgCaracter = "La contrasenya ha de tenir almenys 8 caràcters\n";
+    private final String msgNums = "La contrasenya ha de contenir almenys 2 números\n";
+    private final String msgMayus = "La contrasenya ha de contenir almenys una lletra majúscula\n";
+    private final String msgEsp = "La contrasenya ha de contenir almenys un caràcter especial";
 
     @Test
     public void testContrasenyaVacia() {
