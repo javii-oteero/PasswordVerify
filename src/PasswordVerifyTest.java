@@ -130,7 +130,6 @@ class PasswordVerifyTest {
     @Test
     public void testContrasenyaValidaCompleja() {
         EsCorrecta pass = PasswordVerify.verify("#P4blit0cl4v0uncl4vit0#");
-
         assertTrue(pass.isCorrecta());
         assertEquals("", pass.getError());
     }
